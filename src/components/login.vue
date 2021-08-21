@@ -39,57 +39,57 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       // 登陆表单数据绑定
       loginForm: {
-        username: "admin",
-        password: "123456",
+        username: 'admin',
+        password: '123456'
       },
       //   表单验证
       loginFromRule: {
         //   验证用户名是否合法
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
+          { required: true, message: '请输入用户名', trigger: 'blur' },
           {
             min: 3,
             max: 10,
-            message: "长度在 3 到 10 个字符",
-            trigger: "blur",
-          },
+            message: '长度在 3 到 10 个字符',
+            trigger: 'blur'
+          }
         ],
         password: [
-          { required: true, message: "请输入密码", trigger: "blur" },
+          { required: true, message: '请输入密码', trigger: 'blur' },
           {
             min: 6,
             max: 15,
-            message: "长度在 6 到 15 个字符",
-            trigger: "blur",
-          },
-        ],
-      },
-    };
+            message: '长度在 6 到 15 个字符',
+            trigger: 'blur'
+          }
+        ]
+      }
+    }
   },
   methods: {
-    //  点击重置按钮，重置登录表单
-    resetLoginForm() {
-      this.$refs.loginFormRef.resetFields();
+    // 点击重置按钮，重置登录表单
+    resetLoginForm () {
+      this.$refs.loginFormRef.resetFields()
     },
     // 表单预校验
-    login() {
+    login () {
       this.$refs.loginFormRef.validate(async (valid) => {
-        if (!valid) return;
-        const { data: res } = await this.$http.post("login", this.loginForm);
-        if (res.meta.status !== 200) return this.$message.error("登录失败！");
-        this.$message.success("登录成功~");
+        if (!valid) return
+        const { data: res } = await this.$http.post('login', this.loginForm)
+        if (res.meta.status !== 200) return this.$message.error('登录失败！')
+        this.$message.success('登录成功~')
         // 保存token到本地浏览器，使用临时会话存储
-        window.sessionStorage.setItem("token",res.data.token)
+        window.sessionStorage.setItem('token', res.data.token)
         // 通过编程式导航跳转至后台主页，路由地址是 /home
-        this.$router.push("/home")
-      });
-    },
-  },
-};
+        this.$router.push('/home')
+      })
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
