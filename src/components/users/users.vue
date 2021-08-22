@@ -95,7 +95,7 @@
     <el-dialog
       title="添加用户"
       :visible.sync="addDialogVisible"
-      width="50%"
+      width="30%"
       @close="addDialogClosed"
     >
       <!-- 对话框内容主体区域 -->
