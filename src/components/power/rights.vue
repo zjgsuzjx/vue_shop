@@ -29,24 +29,23 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      rightsList: [],
-    };
+      rightsList: []
+    }
   },
-  created() {
-    this.grtRightsList();
+  created () {
+    this.grtRightsList()
   },
   methods: {
     // 获取权限列表
-    async grtRightsList() {
-      const { data: res } = await this.$http.get("rights/list");
-      if (res.meta.status !== 200)
-        return this.$message.error("获取权限列表失败！");
-      this.rightsList = res.data;
-    },
-  },
-};
+    async grtRightsList () {
+      const { data: res } = await this.$http.get('rights/list')
+      if (res.meta.status !== 200) { return this.$message.error('获取权限列表失败！') }
+      this.rightsList = res.data
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
