@@ -1,6 +1,6 @@
 import Vue from 'vue'
 // 按需引入
-import { Option,Select,Tree, Tag, Dialog, Pagination, Tooltip, Switch, TableColumn, Table, Col, Row, Card, BreadcrumbItem, Breadcrumb, Menu, Submenu, MenuItemGroup, MenuItem, Button, Form, FormItem, Input, Message, MessageBox, Container, Aside, Main, Header } from 'element-ui'
+import { TimelineItem,Timeline, TabPane, Tabs, Cascader, Alert, Option, Select, Tree, Tag, Dialog, Pagination, Tooltip, Switch, TableColumn, Table, Col, Row, Card, BreadcrumbItem, Breadcrumb, Menu, Submenu, MenuItemGroup, MenuItem, Button, Form, FormItem, Input, Message, MessageBox, Container, Aside, Main, Header } from 'element-ui'
 // 注册组件
 Vue.use(Button)
 Vue.use(Form)
@@ -28,7 +28,13 @@ Vue.use(Dialog)
 Vue.use(Tag)
 Vue.use(Tree)
 Vue.use(Option)
+Vue.use(Alert)
 Vue.use(Select)
+Vue.use(Cascader)
+Vue.use(TabPane)
+Vue.use(Tabs)
+Vue.use(Timeline)
+Vue.use(TimelineItem)
 // message有点特殊，要全局挂载
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

@@ -400,8 +400,8 @@ export default {
     },
     // 展示分配角色对话框
     async setRole(userInfo) {
-      this.selectRoleId=''
-      this.userInfo=[]
+      this.selectRoleId = "";
+      this.userInfo = [];
       this.userInfo = userInfo;
       const { data: res } = await this.$http.get("roles");
       if (res.meta.status !== 200)
@@ -419,8 +419,7 @@ export default {
           rid: this.selectRoleId,
         }
       );
-      if (res.meta.status !== 200)
-        return this.$message.error(res.meta.msg);
+      if (res.meta.status !== 200) return this.$message.error(res.meta.msg);
       this.$message.success("更新角色成功~");
       this.getUsersList();
       this.setRoleDialogVisible = false;

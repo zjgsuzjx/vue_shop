@@ -16,3 +16,15 @@ html,body,#app{
 .el-pagination {
     margin-top: 20px;
 }
+/* 解决cascader级联样式表超出屏幕的问题 */
+.el-cascader-panel {
+    height: 350px;
+}
+/* 隐藏横向滚动条 */
+.el-scrollbar__wrap{
+    overflow-x: hidden;
+  }
+  .el-form-item__label {
+    padding: 0 6px 0 0;
+  }
+  
