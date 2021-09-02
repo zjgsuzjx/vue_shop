@@ -1,5 +1,6 @@
 <template>
   <div class="login_container">
+    <canvas id="startrack"></canvas>
     <div class="login_box">
       <!-- 头像区域 -->
       <div class="avatar_box">
@@ -88,7 +89,14 @@ export default {
         this.$router.push('/home')
       })
     }
-  }
+  },
+  // // 引入外部JS
+  // mounted () {
+  //   const s = document.createElement('script')
+  //   s.type = 'text/JavaScript'
+  //   s.src = 'https://api.amogu.cn/public/static/index/js/page.js'
+  //   document.body.appendChild(s)
+  // }
 }
 </script>
 
@@ -97,6 +105,10 @@ export default {
 .login_container {
   background-color: skyblue;
   height: 100%;
+}
+#startrack {
+  height: 100%;
+  width: 100%;
 }
 .login_box {
   width: 450px;

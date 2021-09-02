@@ -27,4 +27,16 @@ html,body,#app{
   .el-form-item__label {
     padding: 0 6px 0 0;
   }
-  
+.el-steps {
+    margin: 30px 0;
+
+}
+.el-step__title{
+    font-size: 14px;
+}
+.ql-editor {
+    min-height: 350px;
+}
+.el-tabs {
+    margin-bottom: 20px;
+}

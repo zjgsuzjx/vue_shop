@@ -108,13 +108,13 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       // 查询条件
       queryInfo: {
         type: 3,
         pagenum: 1,
-        pagesize: 5,
+        pagesize: 5
       },
       cateList: [],
       total: 0,
@@ -122,117 +122,116 @@ export default {
       addCatDialogVisible: false,
       columns: [
         {
-          label: "分类名称",
-          prop: "cat_name",
+          label: '分类名称',
+          prop: 'cat_name'
         },
         {
-          label: "是否有效",
-          type: "template",
-          template: "isok",
+          label: '是否有效',
+          type: 'template',
+          template: 'isok'
         },
         {
-          label: "排序",
-          type: "template",
-          template: "order",
+          label: '排序',
+          type: 'template',
+          template: 'order'
         },
         {
-          label: "操作",
-          type: "template",
-          template: "opt",
-        },
+          label: '操作',
+          type: 'template',
+          template: 'opt'
+        }
       ],
       addCateForm: {
-        cat_name: "",
+        cat_name: '',
         cat_pid: 0,
         // 分类的等级默认是一级分类
-        cat_level: 0,
+        cat_level: 0
       },
       addCateFormRules: {
         cat_name: [
           {
             required: true,
-            message: "请输入分类名称",
-            trigger: "blur",
-          },
-        ],
+            message: '请输入分类名称',
+            trigger: 'blur'
+          }
+        ]
       },
       // 商品分类列表
       categories: [],
       // 级联选择框的配置对象
       cateProps: {
-        value: "cat_id",
-        label: "cat_name",
-        children: "children",
+        value: 'cat_id',
+        label: 'cat_name',
+        children: 'children'
       },
       // 级联选择框双向绑定到的数组
-      selectedCateKeys: [],
-    };
+      selectedCateKeys: []
+    }
   },
-  created() {
-    this.getCateList();
-    this.getCategories();
+  created () {
+    this.getCateList()
+    this.getCategories()
   },
   methods: {
-    async getCateList() {
-      const { data: res } = await this.$http.get("categories", {
-        params: this.queryInfo,
-      });
+    async getCateList () {
+      const { data: res } = await this.$http.get('categories', {
+        params: this.queryInfo
+      })
       if (res.meta.status !== 200) {
-        return this.$message.error("获取商品分类失败！！");
+        return this.$message.error('获取商品分类失败！！')
       }
-      this.cateList = res.data.result;
-      this.total = res.data.total;
+      this.cateList = res.data.result
+      this.total = res.data.total
     },
-    handleSizeChange(newSize) {
-      this.queryInfo.pagesize = newSize;
-      this.getCateList();
+    handleSizeChange (newSize) {
+      this.queryInfo.pagesize = newSize
+      this.getCateList()
     },
-    handleCurrentChange(newPage) {
-      this.queryInfo.pagenum = newPage;
-      this.getCateList();
+    handleCurrentChange (newPage) {
+      this.queryInfo.pagenum = newPage
+      this.getCateList()
     },
-    async getCategories() {
-      const { data: res } = await this.$http.get("categories");
+    async getCategories () {
+      const { data: res } = await this.$http.get('categories')
       if (res.meta.status !== 200) {
-        return this.$message.error("获取商品分类失败！");
+        return this.$message.error('获取商品分类失败！')
       }
-      this.categories = res.data;
+      this.categories = res.data
     },
     // 级联选择框选中项变化，会触发这个函数
-    handleChange() {
+    handleChange () {
       if (this.selectedCateKeys.length > 0) {
         this.addCateForm.cat_pid =
-          this.selectedCateKeys[this.selectedCateKeys.length - 1];
-        this.addCateForm.cat_level = this.selectedCateKeys.length;
-        return;
+          this.selectedCateKeys[this.selectedCateKeys.length - 1]
+        this.addCateForm.cat_level = this.selectedCateKeys.length
       } else {
-        this.addCateForm.cat_pid = 0;
-        this.addCateForm.cat_level = 0;
+        this.addCateForm.cat_pid = 0
+        this.addCateForm.cat_level = 0
       }
     },
-    addCateDialogClosed() {
-      this.$refs.addCateFormRef.resetFields();
-      this.selectedCateKeys = [];
-      this.addCateForm.cat_level = 0;
-      this.addCateForm.cat_pid = 0;
+    addCateDialogClosed () {
+      this.$refs.addCateFormRef.resetFields()
+      this.selectedCateKeys = []
+      this.addCateForm.cat_level = 0
+      this.addCateForm.cat_pid = 0
     },
-    addCate() {
+    addCate () {
       this.$refs.addCateFormRef.validate(async (valid) => {
-        if (!valid) return;
+        if (!valid) return
         const { data: res } = await this.$http.post(
-          "categories",
+          'categories',
           this.addCateForm
-        );
-        console.log(res);
-        if (res.meta.status !== 201) return this.$message.error("添加失败!!");
-        this.$message.success("添加成功~");
-        this.getCateList();
-        this.getCategories();
-        this.addCatDialogVisible = false;
-      });
-    },
-  },
-};
+        )
+        console.log(res)
+        if (res.meta.status !== 201) return this.$message.error('添加失败!!')
+        this.$message.success('添加成功~')
+        this.getCateList()
+        this.getCategories()
+        this.addCatDialogVisible = false
+      })
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>

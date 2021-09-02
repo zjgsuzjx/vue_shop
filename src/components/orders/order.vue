@@ -30,7 +30,7 @@
         <el-table-column label="是否发货" prop="is_send"></el-table-column>
         <el-table-column label="下单时间" prop="create_time">
           <template slot-scope="scope">
-            <!-- {{ scope.row.create_time | dateFormat }} -->
+            {{scope.row.create_time * 1000 | FormatData}}
           </template>
         </el-table-column>
         <el-table-column label="操作">
@@ -108,77 +108,76 @@
 </template>
 
 <script>
-import cityData from "./citydata";
-import wuliu from "./kuaidi.json";
+import cityData from './citydata'
+import wuliu from './kuaidi.json'
 export default {
-  data() {
+  data () {
     return {
       queryInfo: {
-        query: "",
+        query: '',
         pagenum: 1,
-        pagesize: 10,
+        pagesize: 10
       },
       orderList: [],
       total: 0,
       addressDialogVisible: false,
       addressForm: {
         address1: [],
-        address2: "",
+        address2: ''
       },
       addressFormRules: {
         address1: [
           {
             require: true,
-            message: "请选择省市区县",
-            tigger: "blur",
-          },
+            message: '请选择省市区县',
+            tigger: 'blur'
+          }
         ],
         address2: [
           {
             require: true,
-            message: "请填写详细地址",
-            tigger: "blur",
-          },
-        ],
+            message: '请填写详细地址',
+            tigger: 'blur'
+          }
+        ]
       },
       cityData,
       showProgressVisible: false,
-      progressInfo: {},
-    };
+      progressInfo: {}
+    }
   },
   methods: {
-    async getOrderList() {
-      const { data: res } = await this.$http.get("orders", {
-        params: this.queryInfo,
-      });
-      if (res.meta.status !== 200)
-        return this.$message.error("获取订单列表失败！！");
-      this.total = res.data.total;
-      this.orderList = res.data.goods;
+    async getOrderList () {
+      const { data: res } = await this.$http.get('orders', {
+        params: this.queryInfo
+      })
+      if (res.meta.status !== 200) { return this.$message.error('获取订单列表失败！！') }
+      this.total = res.data.total
+      this.orderList = res.data.goods
     },
-    handleSizeChange(newSize) {
-      this.queryInfo.pagesize = newSize;
-      this.getOrderList();
+    handleSizeChange (newSize) {
+      this.queryInfo.pagesize = newSize
+      this.getOrderList()
     },
-    handleCurrentChange(newPage) {
-      this.queryInfo.pagenum = newPage;
-      this.getOrderList();
+    handleCurrentChange (newPage) {
+      this.queryInfo.pagenum = newPage
+      this.getOrderList()
     },
-    addressDialogClosed() {
-      this.$refs.addressFormRef.resetFields();
+    addressDialogClosed () {
+      this.$refs.addressFormRef.resetFields()
     },
-    async showProgress() {
+    async showProgress () {
       // const { data: res } = await this.$http.get("/kuaidi/1106975712662");
       // if (res.meta.status !== 200)
       //   return this.$message.error("获取物流信息失败！！");
-      this.progressInfo = wuliu.data;
-      this.showProgressVisible = true;
-    },
+      this.progressInfo = wuliu.data
+      this.showProgressVisible = true
+    }
   },
-  created() {
-    this.getOrderList();
-  },
-};
+  created () {
+    this.getOrderList()
+  }
+}
 </script>
 
 <style lang="less" scoped>

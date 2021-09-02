@@ -24,7 +24,7 @@
           </el-input>
         </el-col>
         <el-col :span="7">
-          <el-button type="primary" @click="addDialogVisible = true"
+          <el-button type="primary" @click="goAddPage"
             >添加商品</el-button
           >
         </el-col>
@@ -34,15 +34,21 @@
         <el-table-column
           label="商品名称"
           prop="goods_name"
-          style="width: 50%"
+          align="center"
         ></el-table-column>
         <el-table-column
           label="商品价格（元）"
           prop="goods_price"
+          width="100px"
+          align="center"
         ></el-table-column>
-        <el-table-column label="商品重量" prop="goods_weight"></el-table-column>
-        <el-table-column label="创建时间" prop="goods_state"></el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="商品重量" prop="goods_weight" width="90px" align="center"></el-table-column>
+        <el-table-column label="创建时间" prop="add_time" width="180px" align="center">
+          <template slot-scope="scope">
+            {{scope.row.add_time * 1000 | FormatData}}
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="150px" align="center">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
             <el-button
@@ -77,67 +83,69 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       queryInfo: {
-        query: "",
+        query: '',
         // 当前页数
         pagenum: 1,
         // 每页的数量
-        pagesize: 20,
+        pagesize: 20
       },
       goodsList: [],
-      total: 0,
-    };
+      total: 0
+    }
   },
-  created() {
-    this.getGoodsList();
+  created () {
+    this.getGoodsList()
   },
   methods: {
-    async getGoodsList() {
-      const { data: res } = await this.$http.get("goods", {
-        params: this.queryInfo,
-      });
-      if (res.meta.status !== 200)
-        return this.$message.error("获取商品列表失败！！");
-      this.goodsList = res.data.goods;
-      this.total = res.data.total;
+    async getGoodsList () {
+      const { data: res } = await this.$http.get('goods', {
+        params: this.queryInfo
+      })
+      if (res.meta.status !== 200) { return this.$message.error('获取商品列表失败！！') }
+      this.goodsList = res.data.goods
+      this.total = res.data.total
     },
-    handleSizeChange(newSize) {
-      this.queryInfo.pagesize = newSize;
-      this.getGoodsList();
+    handleSizeChange (newSize) {
+      this.queryInfo.pagesize = newSize
+      this.getGoodsList()
     },
-    handleCurrentChange(newPage) {
-      this.queryInfo.pagenum = newPage;
-      this.getGoodsList();
+    handleCurrentChange (newPage) {
+      this.queryInfo.pagenum = newPage
+      this.getGoodsList()
     },
     // 删除商品
-    async deleteGoods(id) {
+    async deleteGoods (id) {
       const confirmRes = await this.$confirm(
-        "此操作将永久删除该商品, 是否继续?",
-        "提示",
+        '此操作将永久删除该商品, 是否继续?',
+        '提示',
         {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning",
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
         }
       )
         .then(async () => {
-          const { data: res } = await this.$http.delete(`goods/${id}`);
-          console.log(id);
-          if (res.meta.status != 200) return this.$message.error("删除失败！");
-          this.$message.success("删除成功~");
-          this.getGoodsList();
+          const { data: res } = await this.$http.delete(`goods/${id}`)
+          console.log(id)
+          if (res.meta.status !== 200) return this.$message.error('删除失败！')
+          this.$message.success('删除成功~')
+          this.getGoodsList()
         })
         .catch(() => {
           this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
-        });
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
     },
-  },
-};
+    goAddPage () {
+      this.$router.push({ path: '/goods/add' })
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
