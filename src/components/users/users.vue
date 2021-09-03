@@ -385,10 +385,6 @@ export default {
           if (res.meta.status !== 200) return this.$message.error('删除失败！')
           this.$message.success('删除成功~')
           this.getUsersList()
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          })
         })
         .catch(() => {
           this.$message({

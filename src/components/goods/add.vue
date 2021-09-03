@@ -119,7 +119,7 @@
           </el-tab-pane>
           <el-tab-pane label="商品图片" name="3">
             <el-upload
-              action="http://acg.zjgsuzjx.top:8888/api/private/v1/upload"
+              action="https://acg.zjgsuzjx.top:8888/api/private/v1/upload"
               :on-preview="handlePreview"
               :on-remove="handleRemove"
               list-type="picture"

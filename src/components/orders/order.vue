@@ -7,10 +7,19 @@
       <el-breadcrumb-item>订单列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card class="box-card">
-      <el-row>
+      <el-row :gutter="20">
         <el-col :span="8">
-          <el-input placeholder="请输入内容">
-            <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-input
+            placeholder="请输入内容进行搜索"
+            v-model="queryInfo.query"
+            @clear="getOrderList"
+            clearable
+          >
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="getOrderList"
+            ></el-button>
           </el-input>
         </el-col>
       </el-row>
@@ -30,11 +39,11 @@
         <el-table-column label="是否发货" prop="is_send"></el-table-column>
         <el-table-column label="下单时间" prop="create_time">
           <template slot-scope="scope">
-            {{scope.row.create_time * 1000 | FormatData}}
+            {{ (scope.row.create_time * 1000) | FormatData }}
           </template>
         </el-table-column>
         <el-table-column label="操作">
-          <template slot-scope="scope">
+          <template>
             <el-button
               type="primary"
               icon="el-icon-edit"
@@ -85,11 +94,9 @@
           <el-input v-model="addressForm.address2"></el-input>
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
+      <span slot="footer">
         <el-button @click="addressDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addressDialogVisible = false"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="editAddress">确 定</el-button>
       </span>
     </el-dialog>
     <!-- 展示物流进度的对话框 -->
@@ -108,76 +115,82 @@
 </template>
 
 <script>
-import cityData from './citydata'
-import wuliu from './kuaidi.json'
+import cityData from "./citydata";
+import wuliu from "./kuaidi.json";
 export default {
-  data () {
+  data() {
     return {
       queryInfo: {
-        query: '',
+        query: "",
         pagenum: 1,
-        pagesize: 10
+        pagesize: 10,
       },
       orderList: [],
       total: 0,
       addressDialogVisible: false,
       addressForm: {
         address1: [],
-        address2: ''
+        address2: "",
       },
       addressFormRules: {
         address1: [
           {
-            require: true,
-            message: '请选择省市区县',
-            tigger: 'blur'
-          }
+            required: true,
+            message: "请选择省市区县",
+            trigger: "blur",
+          },
         ],
         address2: [
           {
-            require: true,
-            message: '请填写详细地址',
-            tigger: 'blur'
-          }
-        ]
+            required: true,
+            message: "请填写详细地址",
+            trigger: "blur",
+          },
+        ],
       },
       cityData,
       showProgressVisible: false,
-      progressInfo: {}
-    }
+      progressInfo: {},
+    };
   },
   methods: {
-    async getOrderList () {
-      const { data: res } = await this.$http.get('orders', {
-        params: this.queryInfo
-      })
-      if (res.meta.status !== 200) { return this.$message.error('获取订单列表失败！！') }
-      this.total = res.data.total
-      this.orderList = res.data.goods
+    async getOrderList() {
+      const { data: res } = await this.$http.get("orders", {
+        params: this.queryInfo,
+      });
+      if (res.meta.status !== 200) {
+        return this.$message.error("获取订单列表失败！！");
+      }
+      this.total = res.data.total;
+      this.orderList = res.data.goods;
     },
-    handleSizeChange (newSize) {
-      this.queryInfo.pagesize = newSize
-      this.getOrderList()
+    handleSizeChange(newSize) {
+      this.queryInfo.pagesize = newSize;
+      this.getOrderList();
     },
-    handleCurrentChange (newPage) {
-      this.queryInfo.pagenum = newPage
-      this.getOrderList()
+    handleCurrentChange(newPage) {
+      this.queryInfo.pagenum = newPage;
+      this.getOrderList();
     },
-    addressDialogClosed () {
-      this.$refs.addressFormRef.resetFields()
+    addressDialogClosed() {
+      this.$refs.addressFormRef.resetFields();
     },
-    async showProgress () {
+    async showProgress() {
       // const { data: res } = await this.$http.get("/kuaidi/1106975712662");
       // if (res.meta.status !== 200)
       //   return this.$message.error("获取物流信息失败！！");
-      this.progressInfo = wuliu.data
-      this.showProgressVisible = true
-    }
+      this.progressInfo = wuliu.data;
+      this.showProgressVisible = true;
+    },
+    editAddress() {
+      this.$message.success("修改成功咯~");
+      this.addressDialogVisible = false;
+    },
   },
-  created () {
-    this.getOrderList()
-  }
-}
+  created() {
+    this.getOrderList();
+  },
+};
 </script>
 
 <style lang="less" scoped>

@@ -7,7 +7,6 @@ import './assets/css/global.css'
 // 导入字体图标,这里用了阿里图标
 import './assets/fonts/iconfont.css'
 import TreeTable from 'vue-table-with-tree-grid'
-
 import axios from 'axios'
 import moment from 'moment'
 // 导入富文本编辑器
