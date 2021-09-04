@@ -167,7 +167,7 @@ export default {
 }
 .version {
   color: #fff;
-  position: absolute;
+  position: fixed;
   left: 8px;
   bottom: 40px;
   text-align: center;
